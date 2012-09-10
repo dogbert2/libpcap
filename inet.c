@@ -195,6 +195,7 @@ add_or_find_if(pcap_if_t **curdev_ret, pcap_if_t **alldevs, const char *name,
 			strcat(en_name, name + 3);
 			p = pcap_open_live(en_name, 68, 0, 0, open_errbuf);
 			free(en_name);
+			en_name = NULL;
 		} else
 #endif /* __APPLE */
 		p = pcap_open_live(name, 68, 0, 0, open_errbuf);
@@ -228,6 +229,7 @@ add_or_find_if(pcap_if_t **curdev_ret, pcap_if_t **alldevs, const char *name,
 			(void)snprintf(errbuf, PCAP_ERRBUF_SIZE,
 			    "malloc: %s", pcap_strerror(errno));
 			free(curdev);
+			curdev = NULL;
 			return (-1);
 		}
 		if (description != NULL) {
@@ -240,6 +242,7 @@ add_or_find_if(pcap_if_t **curdev_ret, pcap_if_t **alldevs, const char *name,
 				    "malloc: %s", pcap_strerror(errno));
 				free(curdev->name);
 				free(curdev);
+				curdev = NULL;
 				return (-1);
 			}
 		} else {
@@ -490,12 +493,14 @@ add_addr_to_iflist(pcap_if_t **alldevs, const char *name, u_int flags,
 	if (add_or_find_if(&curdev, alldevs, name, flags, description,
 	    errbuf) == -1) {
 		free(description);
+		description = NULL;
 		/*
 		 * Error - give up.
 		 */
 		return (-1);
 	}
 	free(description);
+	description = NULL;
 	if (curdev == NULL) {
 		/*
 		 * Device wasn't added because it can't be opened.
@@ -524,6 +529,7 @@ add_addr_to_iflist(pcap_if_t **alldevs, const char *name, u_int flags,
 			(void)snprintf(errbuf, PCAP_ERRBUF_SIZE,
 			    "malloc: %s", pcap_strerror(errno));
 			free(curaddr);
+			curaddr = NULL;
 			return (-1);
 		}
 	} else
@@ -537,6 +543,7 @@ add_addr_to_iflist(pcap_if_t **alldevs, const char *name, u_int flags,
 			if (curaddr->addr != NULL)
 				free(curaddr->addr);
 			free(curaddr);
+			curaddr = NULL;
 			return (-1);
 		}
 	} else
@@ -552,6 +559,7 @@ add_addr_to_iflist(pcap_if_t **alldevs, const char *name, u_int flags,
 			if (curaddr->addr != NULL)
 				free(curaddr->addr);
 			free(curaddr);
+			curaddr = NULL;
 			return (-1);
 		}
 	} else
@@ -569,6 +577,7 @@ add_addr_to_iflist(pcap_if_t **alldevs, const char *name, u_int flags,
 			if (curaddr->addr != NULL)
 				free(curaddr->addr);
 			free(curaddr);
+			curaddr = NULL;
 			return (-1);
 		}
 	} else
@@ -640,6 +649,7 @@ pcap_freealldevs(pcap_if_t *alldevs)
 			if (curaddr->dstaddr)
 				free(curaddr->dstaddr);
 			free(curaddr);
+			curaddr = NULL;
 		}
 
 		/*
@@ -657,6 +667,7 @@ pcap_freealldevs(pcap_if_t *alldevs)
 		 * Free the interface.
 		 */
 		free(curdev);
+		curdev = NULL;
 	}
 }
 
@@ -852,6 +863,7 @@ pcap_lookupdev(errbuf)
 				"PacketGetAdapterNames: %s",
 				pcap_win32strerror());
 			free(TAdaptersName);
+			TAdaptersName = NULL;
 			return NULL;
 		}
 
@@ -886,6 +898,7 @@ pcap_lookupdev(errbuf)
 		}
 
 		free(TAdaptersName);
+		TAdaptersName = NULL;
 		return (char *)(AdaptersName);
 	}	
 }
