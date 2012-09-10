@@ -232,6 +232,7 @@ pcap_nametoportrange(const char *name, int *port1, int *port2, int *proto)
 
 		if ((off = strchr(cpy, '-')) == NULL) {
 			free(cpy);
+			cpy = NULL;
 			return 0;
 		}
 
@@ -239,12 +240,14 @@ pcap_nametoportrange(const char *name, int *port1, int *port2, int *proto)
 
 		if (pcap_nametoport(cpy, port1, proto) == 0) {
 			free(cpy);
+			cpy = NULL;
 			return 0;
 		}
 		save_proto = *proto;
 
 		if (pcap_nametoport(off + 1, port2, proto) == 0) {
 			free(cpy);
+			cpy = NULL;
 			return 0;
 		}
 
