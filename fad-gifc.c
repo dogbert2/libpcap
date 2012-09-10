@@ -190,12 +190,14 @@ pcap_findalldevs_interfaces(pcap_if_t **alldevsp, char *errbuf)
 			    "SIOCGIFCONF: %s", pcap_strerror(errno));
 			(void)close(fd);
 			free(buf);
+			buf = NULL;
 			return (-1);
 		}
 		if (ifc.ifc_len < buf_size &&
 		    (buf_size - ifc.ifc_len) > sizeof(ifrp->ifr_name) + MAX_SA_LEN)
 			break;
 		free(buf);
+		buf = NULL;
 		buf_size *= 2;
 	}
 
@@ -408,6 +410,7 @@ pcap_findalldevs_interfaces(pcap_if_t **alldevsp, char *errbuf)
 		}
 	}
 	free(buf);
+	buf = NULL;
 	(void)close(fd);
 
 	if (ret == -1) {
