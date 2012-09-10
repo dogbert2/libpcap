@@ -2003,7 +2003,7 @@ opt_init(root)
 	n = count_blocks(root);
 	blocks = (struct block **)calloc(n, sizeof(*blocks));
 	if (blocks == NULL)
-		bpf_error("malloc");
+		bpf_error("calloc: failed to allocate memory for blocks");
 	unMarkAll();
 	n_blocks = 0;
 	number_blks_r(root);
@@ -2011,14 +2011,14 @@ opt_init(root)
 	n_edges = 2 * n_blocks;
 	edges = (struct edge **)calloc(n_edges, sizeof(*edges));
 	if (edges == NULL)
-		bpf_error("malloc");
+		bpf_error("calloc: failed to allocate memory for edges");
 
 	/*
 	 * The number of levels is bounded by the number of nodes.
 	 */
 	levels = (struct block **)calloc(n_blocks, sizeof(*levels));
 	if (levels == NULL)
-		bpf_error("malloc");
+		bpf_error("calloc: failed to allocate memory for levels");
 
 	edgewords = n_edges / (8 * sizeof(bpf_u_int32)) + 1;
 	nodewords = n_blocks / (8 * sizeof(bpf_u_int32)) + 1;
@@ -2027,7 +2027,7 @@ opt_init(root)
 	space = (bpf_u_int32 *)malloc(2 * n_blocks * nodewords * sizeof(*space)
 				 + n_edges * edgewords * sizeof(*space));
 	if (space == NULL)
-		bpf_error("malloc");
+		bpf_error("malloc: failed to allocate memory for space");
 	p = space;
 	all_dom_sets = p;
 	for (i = 0; i < n; ++i) {
@@ -2066,7 +2066,7 @@ opt_init(root)
 	vmap = (struct vmapinfo *)calloc(maxval, sizeof(*vmap));
 	vnode_base = (struct valnode *)calloc(maxval, sizeof(*vnode_base));
 	if (vmap == NULL || vnode_base == NULL)
-		bpf_error("malloc");
+		bpf_error("calloc: failed to allocate memory for vmap or vnode_base");
 }
 
 /*
@@ -2116,8 +2116,8 @@ convert_code_r(p)
 	/* generate offset[] for convenience  */
 	if (slen) {
 		offset = (struct slist **)calloc(slen, sizeof(struct slist *));
-		if (!offset) {
-			bpf_error("not enough core");
+		if (offset == NULL) {
+			bpf_error("calloc: not enough core for offset[]");
 			/*NOTREACHED*/
 		}
 	}
