@@ -6097,6 +6097,7 @@ gen_scode(name, q)
 					    "unknown ether host '%s'", name);
 				b = gen_ehostop(eaddr, dir);
 				free(eaddr);
+				eaddr = NULL;
 				return b;
 
 			case DLT_FDDI:
@@ -6106,6 +6107,7 @@ gen_scode(name, q)
 					    "unknown FDDI host '%s'", name);
 				b = gen_fhostop(eaddr, dir);
 				free(eaddr);
+				eaddr = NULL;
 				return b;
 
 			case DLT_IEEE802:
@@ -6115,6 +6117,7 @@ gen_scode(name, q)
 					    "unknown token ring host '%s'", name);
 				b = gen_thostop(eaddr, dir);
 				free(eaddr);
+				eaddr = NULL;
 				return b;
 
 			case DLT_IEEE802_11:
@@ -6128,6 +6131,7 @@ gen_scode(name, q)
 					    "unknown 802.11 host '%s'", name);
 				b = gen_wlanhostop(eaddr, dir);
 				free(eaddr);
+				eaddr = NULL;
 				return b;
 
 			case DLT_IP_OVER_FC:
@@ -6137,6 +6141,7 @@ gen_scode(name, q)
 					    "unknown Fibre Channel host '%s'", name);
 				b = gen_ipfchostop(eaddr, dir);
 				free(eaddr);
+				eaddr = NULL;
 				return b;
 
 			case DLT_SUNATM:
@@ -6159,6 +6164,7 @@ gen_scode(name, q)
 				b = gen_ehostop(eaddr, dir);
 				gen_and(tmp, b);
 				free(eaddr);
+				eaddr = NULL;
 				return b;
 			}
 
@@ -6345,6 +6351,7 @@ gen_scode(name, q)
 			bpf_error("unknown host '%s'", name);
 		b = gen_gateway(eaddr, alist, proto, dir);
 		free(eaddr);
+		eaddr = NULL;
 		return b;
 #else
 		bpf_error("'gateway' not supported in this configuration");
