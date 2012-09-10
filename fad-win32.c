@@ -74,6 +74,7 @@ add_addr_to_list(pcap_if_t *curdev, struct sockaddr *addr,
 			(void)snprintf(errbuf, PCAP_ERRBUF_SIZE,
 			    "malloc: %s", pcap_strerror(errno));
 			free(curaddr);
+			curaddr = NULL;
 			return (-1);
 		}
 	} else
@@ -85,6 +86,7 @@ add_addr_to_list(pcap_if_t *curdev, struct sockaddr *addr,
 			(void)snprintf(errbuf, PCAP_ERRBUF_SIZE,
 			    "malloc: %s", pcap_strerror(errno));
 			free(curaddr);
+			curaddr = NULL;
 			return (-1);
 		}
 	} else
@@ -96,6 +98,7 @@ add_addr_to_list(pcap_if_t *curdev, struct sockaddr *addr,
 			(void)snprintf(errbuf, PCAP_ERRBUF_SIZE,
 			    "malloc: %s", pcap_strerror(errno));
 			free(curaddr);
+			curaddr = NULL;
 			return (-1);
 		}
 	} else
@@ -107,6 +110,7 @@ add_addr_to_list(pcap_if_t *curdev, struct sockaddr *addr,
 			(void)snprintf(errbuf, PCAP_ERRBUF_SIZE,
 			    "malloc: %s", pcap_strerror(errno));
 			free(curaddr);
+			curaddr = NULL;
 			return (-1);
 		}
 	} else
@@ -256,6 +260,7 @@ pcap_findalldevs(pcap_if_t **alldevsp, char *errbuf)
 			"PacketGetAdapterNames: %s",
 			pcap_win32strerror());
 		free(AdaptersName);
+		AdaptersName = NULL;
 		return (-1);
 	}
 	
@@ -323,5 +328,6 @@ pcap_findalldevs(pcap_if_t **alldevsp, char *errbuf)
 	
 	*alldevsp = devlist;
 	free(AdaptersName);
+	AdaptersName = NULL;
 	return (ret);
 }
