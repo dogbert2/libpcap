@@ -1875,9 +1875,9 @@ pcap_activate_bpf(pcap_t *p)
 	 * we try to select DLT_IEEE802_11.
 	 */
 	if (have_osinfo) {
-		if (isdigit((unsigned)osinfo.release[0]) &&
+		if (isdigit((unsigned int)osinfo.release[0]) &&
 		     (osinfo.release[0] == '9' ||
-		     isdigit((unsigned)osinfo.release[1]))) {
+		     isdigit((unsigned int)osinfo.release[1]))) {
 			/*
 			 * 10.5 (Darwin 9.x), or later.
 			 */

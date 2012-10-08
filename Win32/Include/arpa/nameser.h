@@ -250,38 +250,38 @@
  */
 
 typedef struct {
-	unsigned	id :16;		/* query identification number */
+	unsigned int	id :16;		/* query identification number */
 #if __BYTE_ORDER == __BIG_ENDIAN
 			/* fields in third byte */
-	unsigned	qr: 1;		/* response flag */
-	unsigned	opcode: 4;	/* purpose of message */
-	unsigned	aa: 1;		/* authoritive answer */
-	unsigned	tc: 1;		/* truncated message */
-	unsigned	rd: 1;		/* recursion desired */
+	unsigned int	qr: 1;		/* response flag */
+	unsigned int	opcode: 4;	/* purpose of message */
+	unsigned int	aa: 1;		/* authoritive answer */
+	unsigned int	tc: 1;		/* truncated message */
+	unsigned int	rd: 1;		/* recursion desired */
 			/* fields in fourth byte */
-	unsigned	ra: 1;		/* recursion available */
-	unsigned	pr: 1;		/* primary server req'd (!standard) */
-	unsigned	unused :2;	/* unused bits (MBZ as of 4.9.3a3) */
-	unsigned	rcode :4;	/* response code */
+	unsigned int	ra: 1;		/* recursion available */
+	unsigned int	pr: 1;		/* primary server req'd (!standard) */
+	unsigned int	unused :2;	/* unused bits (MBZ as of 4.9.3a3) */
+	unsigned int	rcode :4;	/* response code */
 #endif
 #if __BYTE_ORDER == __LITTLE_ENDIAN || __BYTE_ORDER == __PDP_ENDIAN
 			/* fields in third byte */
-	unsigned	rd :1;		/* recursion desired */
-	unsigned	tc :1;		/* truncated message */
-	unsigned	aa :1;		/* authoritive answer */
-	unsigned	opcode :4;	/* purpose of message */
-	unsigned	qr :1;		/* response flag */
+	unsigned int	rd :1;		/* recursion desired */
+	unsigned int	tc :1;		/* truncated message */
+	unsigned int	aa :1;		/* authoritive answer */
+	unsigned int	opcode :4;	/* purpose of message */
+	unsigned int	qr :1;		/* response flag */
 			/* fields in fourth byte */
-	unsigned	rcode :4;	/* response code */
-	unsigned	unused :2;	/* unused bits (MBZ as of 4.9.3a3) */
-	unsigned	pr :1;		/* primary server req'd (!standard) */
-	unsigned	ra :1;		/* recursion available */
+	unsigned int	rcode :4;	/* response code */
+	unsigned int	unused :2;	/* unused bits (MBZ as of 4.9.3a3) */
+	unsigned int	pr :1;		/* primary server req'd (!standard) */
+	unsigned int	ra :1;		/* recursion available */
 #endif
 			/* remaining bytes */
-	unsigned	qdcount :16;	/* number of question entries */
-	unsigned	ancount :16;	/* number of answer entries */
-	unsigned	nscount :16;	/* number of authority entries */
-	unsigned	arcount :16;	/* number of resource entries */
+	unsigned int	qdcount :16;	/* number of question entries */
+	unsigned int	ancount :16;	/* number of answer entries */
+	unsigned int	nscount :16;	/* number of authority entries */
+	unsigned int	arcount :16;	/* number of resource entries */
 } HEADER;
 
 /*

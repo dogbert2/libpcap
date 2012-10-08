@@ -1017,7 +1017,7 @@ LOCAL __inline void PktFreeMem (void)
 #elif (DOSX & DJGPP)
   if (rm_mem.rm_segment)
   {
-    unsigned ofs;  /* clear the DOS-mem to prevent further upcalls */
+    unsigned int ofs;  /* clear the DOS-mem to prevent further upcalls */
 
     for (ofs = 0; ofs < 16 * rm_mem.size / 4; ofs += 4)
        _farpokel (_dos_ds, realBase + ofs, 0);
@@ -1243,7 +1243,7 @@ PUBLIC BOOL PktInitDriver (PKT_RX_MODE mode)
   if (writeInfo)
   {
     DWORD    rAdr = realBase + (WORD)&PktReceiver;
-    unsigned sel, ofs;
+    unsigned int sel, ofs;
 
     printf ("\nReceiver at   %04X:%04X\n", RP_SEG(rAdr),    RP_OFF(rAdr));
     printf ("Realbase    = %04X:%04X\n",   RP_SEG(realBase),RP_OFF(realBase));

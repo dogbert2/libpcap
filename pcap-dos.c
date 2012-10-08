@@ -575,7 +575,7 @@ int pcap_findalldevs (pcap_if_t **alldevsp, char *errbuf)
 /*
  * pcap_assert() is mainly used for debugging
  */
-void pcap_assert (const char *what, const char *file, unsigned line)
+void pcap_assert (const char *what, const char *file, unsigned int line)
 {
   FLUSHK();
   fprintf (stderr, "%s (%u): Assertion \"%s\" failed\n",
@@ -852,7 +852,7 @@ static void *pcap_recv_hook (WORD *type)
  * This function is called by Watt-32 (via _eth_xmit_hook).
  * If dbug_init() was called, we should trace packets sent.
  */
-static int pcap_xmit_hook (const void *buf, unsigned len)
+static int pcap_xmit_hook (const void *buf, unsigned int len)
 {
   int rc = 0;
 
@@ -1406,7 +1406,7 @@ static int pktq_init (struct rx_ringbuf *q, int size, int num, char *pool)
 
     /* assert dword aligned elements
      */
-    PCAP_ASSERT (((unsigned)(&elem->data[0]) & 3) == 0);
+    PCAP_ASSERT (((unsigned int)(&elem->data[0]) & 3) == 0);
 #endif
     pool += size;
     *(DWORD*) (pool - sizeof(DWORD)) = PKTQ_MARKER;

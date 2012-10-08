@@ -259,11 +259,11 @@ pcap_read_win32_dag(pcap_t *p, int cnt, pcap_handler callback, u_char *user)
 	u_char *endofbuf;
 	int n = 0;
 	dag_record_t *header;
-	unsigned erf_record_len;
+	unsigned int erf_record_len;
 	ULONGLONG ts;
 	int cc;
-	unsigned swt;
-	unsigned dfp = p->adapter->DagFastProcess;
+	unsigned int swt;
+	unsigned int dfp = p->adapter->DagFastProcess;
 
 	cc = p->cc;
 	if (cc == 0) /* Get new packets only if we have processed all the ones of the previous read */

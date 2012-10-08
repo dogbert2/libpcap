@@ -179,19 +179,19 @@ bpf_u_int32 *space;
  * True if a is in uset {p}
  */
 #define SET_MEMBER(p, a) \
-((p)[(unsigned)(a) / BITS_PER_WORD] & (1 << ((unsigned)(a) % BITS_PER_WORD)))
+((p)[(unsigned int)(a) / BITS_PER_WORD] & (1 << ((unsigned int)(a) % BITS_PER_WORD)))
 
 /*
  * Add 'a' to uset p.
  */
 #define SET_INSERT(p, a) \
-(p)[(unsigned)(a) / BITS_PER_WORD] |= (1 << ((unsigned)(a) % BITS_PER_WORD))
+(p)[(unsigned int)(a) / BITS_PER_WORD] |= (1 << ((unsigned int)(a) % BITS_PER_WORD))
 
 /*
  * Delete 'a' from uset p.
  */
 #define SET_DELETE(p, a) \
-(p)[(unsigned)(a) / BITS_PER_WORD] &= ~(1 << ((unsigned)(a) % BITS_PER_WORD))
+(p)[(unsigned int)(a) / BITS_PER_WORD] &= ~(1 << ((unsigned int)(a) % BITS_PER_WORD))
 
 /*
  * a := a intersect b
@@ -948,11 +948,11 @@ opt_peep(b)
 			break;
 
 		case BPF_JGT:
-			v = (unsigned)v > b->s.k;
+			v = (unsigned int)v > b->s.k;
 			break;
 
 		case BPF_JGE:
-			v = (unsigned)v >= b->s.k;
+			v = (unsigned int)v >= b->s.k;
 			break;
 
 		case BPF_JSET:

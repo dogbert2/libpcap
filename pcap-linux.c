@@ -3232,7 +3232,7 @@ prepare_tpacket_socket(pcap_t *handle)
 static int
 create_ring(pcap_t *handle, int *status)
 {
-	unsigned i, j, frames_per_block;
+	unsigned int i, j, frames_per_block;
 	struct tpacket_req req;
 	socklen_t len;
 	unsigned int sk_type, tp_reserve, maclen, tp_hdrlen, netoff, macoff;

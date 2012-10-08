@@ -456,7 +456,7 @@ usb_read_linux(pcap_t *handle, int max_packets, pcap_handler callback, u_char *u
 	* /usr/src/linux/Documentation/usb/usbmon.txt 
 	* for message format
 	*/
-	unsigned timestamp;
+	unsigned int timestamp;
 	int tag, cnt, ep_num, dev_addr, dummy, ret, urb_len, data_len;
 	char etype, pipeid1, pipeid2, status[16], urb_tag, line[USB_LINE_LEN];
 	char *string = line;
