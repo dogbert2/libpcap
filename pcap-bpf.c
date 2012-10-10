@@ -1197,7 +1197,12 @@ bpf_load(char *errbuf)
 	if (rc == -1 || getmajor(sbuf.st_rdev) != major) {
 		for (i = 0; i < BPF_MINORS; i++) {
 			sprintf(buf, "%s%d", BPF_NODE, i);
-			unlink(buf);
+			if (unlink(buf) < 0) {
+				snprintf(errbuf, PCAP_ERRBUF_SIZE,
+				    "bpf_load: can't remove/unlink %s : s%",
+				    buf, pcap_strerror(errno));
+				return (PCAP_ERROR);
+			}
 			if (mknod(buf, S_IRUSR | S_IFCHR, domakedev(major, i)) == -1) {
 				snprintf(errbuf, PCAP_ERRBUF_SIZE,
 				    "bpf_load: can't mknod %s: %s",
