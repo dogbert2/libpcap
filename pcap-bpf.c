@@ -1197,7 +1197,7 @@ bpf_load(char *errbuf)
 	if (rc == -1 || getmajor(sbuf.st_rdev) != major) {
 		for (i = 0; i < BPF_MINORS; i++) {
 			sprintf(buf, "%s%d", BPF_NODE, i);
-			if (unlink(buf) < 0) {
+			if (unlink(buf) < 0 && errno != ENOENT) {
 				snprintf(errbuf, PCAP_ERRBUF_SIZE,
 				    "bpf_load: can't remove/unlink %s : s%",
 				    buf, pcap_strerror(errno));
