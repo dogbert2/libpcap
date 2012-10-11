@@ -1332,11 +1332,23 @@ pcap_cleanup_bpf(pcap_t *p)
 		 * this case, so do not try and free it directly;
 		 * null it out so that pcap_cleanup_live_common()
 		 * doesn't try to free it.
+		 *
+		 * We cannot recover from a munmap() failure, but
+		 * we can print out an informative message with
+		 * the address location and size of the memory
+		 * mapping which wasn't released by munmap().
+		 *
 		 */
 		if (p->md.zbuf1 != MAP_FAILED && p->md.zbuf1 != NULL)
-			(void) munmap(p->md.zbuf1, p->md.zbufsize);
+			if (munmap(p->md.zbuf1, p->md.zbufsize) != 0) {
+				fprintf(stderr, "Warning: unable to unmap memory at address: %p and size: %u\n",
+					p->md.zbuf1, p->md.zbufsize);
+			}
 		if (p->md.zbuf2 != MAP_FAILED && p->md.zbuf2 != NULL)
-			(void) munmap(p->md.zbuf2, p->md.zbufsize);
+			if (munmap(p->md.zbuf2, p->md.zbufsize) != 0) {
+				fprintf(stderr, "Warning: unable to unmap memory at address: %p and size: %u\n",
+					p->md.zbuf2, p->md.zbufsize);
+			}
 		p->buffer = NULL;
 	}
 #endif

@@ -906,7 +906,18 @@ usb_cleanup_linux_mmap(pcap_t* handle)
 {
 	/* if we have a memory-mapped buffer, unmap it */
 	if (handle->md.mmapbuf != NULL) {
-		munmap(handle->md.mmapbuf, handle->md.mmapbuflen);
+		/*
+		 * We cannot recover from a munmap() failure, but
+		 * we can print out an informative message with
+		 * the address location and size of the memory
+		 * mapping which wasn't released by munmap().
+		 */
+
+		if (munmap(handle->md.mmapbuf, handle->md.mmapbuflen) != 0) {
+			fprintf(stderr, "Warning: unable to unmap memory at address %p and size: %u.\n",
+				handle->md.mmapbuf, handle->md.mmapbuflen);
+		}
+
 		handle->md.mmapbuf = NULL;
 	}
 	pcap_cleanup_live_common(handle);

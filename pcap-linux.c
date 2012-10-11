@@ -756,7 +756,14 @@ enter_rfmon_mode_mac80211(pcap_t *handle, int sock_fd, const char *device)
 		ret = add_mon_if(handle, sock_fd, &nlstate, device, mondevice);
 		if (ret == 1) {
 			handle->md.mondevice = strdup(mondevice);
-			goto added;
+			/*
+			 * call to strdup() has failed, set 'ret' minus 1
+			 */
+			if (handle->md.mondevice == NULL) {
+				fprintf(stderr, "strdup() call for mondevice has failed!\n");
+				ret = -1;
+			} else
+				goto added;
 		}
 		if (ret < 0) {
 			/*
@@ -3558,8 +3565,15 @@ destroy_ring(pcap_t *handle)
 
 	/* if ring is mapped, unmap it*/
 	if (handle->md.mmapbuf) {
-		/* do not test for mmap failure, as we can't recover from any error */
-		munmap(handle->md.mmapbuf, handle->md.mmapbuflen);
+		/* We cannot recover from a munmap() failure, but
+		 * we can print out an informative message with
+		 * the address location and size of the memory
+		 * mapping which wasn't released by munmap().
+		 */
+		if (munmap(handle->md.mmapbuf, handle->md.mmapbuflen) != 0) {
+			fprintf(stderr, "Warning: unable to unmap memory at address: %p and size: %u.\n",
+				handle->md.mmapbuf, handle->md.mmapbuflen);
+		}
 		handle->md.mmapbuf = NULL;
 	}
 }
